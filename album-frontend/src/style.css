@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 全局字体设置 */
+body {
+  @apply font-primary font-bold; /* 对应 tailwind.config.js 中的配置 */
+  margin: 0;
+  overflow: hidden; /* 防止出现滚动条 */
+}

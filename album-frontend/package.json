@@ -1,0 +1,30 @@
+{
+  "name": "album-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "npm-run-all -p frontend:serve backend:start",
+    "frontend:serve": "vite preview --port 3574",
+    "backend:start": "node ../album-backend/server.js",
+    "backend": "node ../album-backend/server.js",
+    "dev:all": "npm-run-all -p backend dev"
+  },
+  "dependencies": {
+    "@vueuse/core": "^14.0.0",
+    "lucide-vue-next": "^0.554.0",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.24"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "autoprefixer": "^10.4.22",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3",
+    "vite": "^7.2.4"
+  }
+}
