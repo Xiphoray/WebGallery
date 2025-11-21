@@ -14,10 +14,6 @@ const DEFAULT_CONFIG = {
 const QUEUE_SIZE = 7;
 const CURRENT_INDEX = 4; // 队列中，当前显示图片的位置索引
 
-// 后端 API 地址
-const API_URL = 'https://picapi.xiphoray.cn/api/image/random'; 
-// 请根据你的后端端口修改，如果前后端都在同一台机器上，可以直接使用 IP
-
 // -------------------------------------------------------------
 // Helper: 计算刷新时长（毫秒）
 // -------------------------------------------------------------
@@ -49,6 +45,9 @@ export const useAlbumStore = defineStore('album', {
 
         // 默认为 'next' (向左滑入/出)，'prev' 则为向右滑入/出
         slideDirection: 'next',
+
+        // ✨ 新增：最终确定的 API Base URL
+        activeApiBase: '',
     }),
 
     getters: {
@@ -71,6 +70,67 @@ export const useAlbumStore = defineStore('album', {
     },
 
     actions: {
+
+        /**
+         * ✨ NEW: 测试单个 API 地址是否可用
+         */
+        async testConnection(baseUrl) {
+            if (!baseUrl) return false;
+            try {
+                // 设置 2 秒超时，防止测试卡太久
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+                // 请求 /api/config
+                const res = await fetch(`${baseUrl}/api/config`, { 
+                    method: 'GET',
+                    signal: controller.signal 
+                });
+                
+                clearTimeout(timeoutId);
+                return res.ok; // 如果返回 200 OK，则连接成功
+            } catch (e) {
+                return false;
+            }
+        },
+
+        /**
+         * ✨ NEW: 决定最佳 API 地址 (核心逻辑)
+         */
+        async determineApiUrl() {
+            // 1. 从 window.env 读取运行时配置
+            const localApi = window.env?.API_LOCAL;
+            const domainApi = window.env?.API_DOMAIN;
+
+            console.log('正在测试 API 连接...', { localApi, domainApi });
+
+            // 2. 优先测试本地地址
+            if (localApi) {
+                const isLocalOk = await this.testConnection(localApi);
+                if (isLocalOk) {
+                    console.log(`✅ 选中本地 API: ${localApi}`);
+                    this.activeApiBase = localApi;
+                    return;
+                }
+                console.warn(`❌ 本地 API (${localApi}) 无法连接`);
+            }
+
+            // 3. 如果本地失败，测试域名地址
+            if (domainApi) {
+                const isDomainOk = await this.testConnection(domainApi);
+                if (isDomainOk) {
+                    console.log(`✅ 选中域名 API: ${domainApi}`);
+                    this.activeApiBase = domainApi;
+                    return;
+                }
+                console.warn(`❌ 域名 API (${domainApi}) 无法连接`);
+            }
+
+            // 4. 都不行，或者没配置，使用相对路径 (同源策略)
+            console.log('⚠️ 使用默认相对路径 /api');
+            this.activeApiBase = ''; 
+        },
+
         // =========================================================
         // A. 图片获取与内存管理
         // =========================================================
@@ -80,8 +140,9 @@ export const useAlbumStore = defineStore('album', {
          * 负责处理 Blob URL 的创建，但不负责 revoke。
          */
         async fetchImage() {
+            const url = `${this.activeApiBase}/api/image/random`;
             try {
-                const response = await fetch(API_URL);
+                const response = await fetch(url);
                 if (!response.ok) throw new Error('Backend fetch failed');
 
                 const blob = await response.blob();
@@ -274,6 +335,7 @@ export const useAlbumStore = defineStore('album', {
          * 调整 initialize 逻辑 (仅在配置完成后调用 startAppFlow)
          */
         async initialize() {
+            await this.determineApiUrl();
             if (this.config.hasInitialized) {
                 await this.startAppFlow();
             } else {

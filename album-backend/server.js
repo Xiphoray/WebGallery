@@ -11,12 +11,46 @@ const PORT = process.env.BACKEND_PORT ? parseInt(process.env.BACKEND_PORT) : 357
 const IMAGE_ROOT = process.env.IMAGE_ROOT || config.imageRoot;
 const SCAN_SUBDIRS = process.env.SCAN_SUBDIRS === 'true' || config.scanSubdirectories;
 
+const defaultAllowed = [
+    'http://localhost:5173', // 本地 Vite 开发
+    'http://localhost:8080', // Docker 默认映射端口
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:8080'
+];
+const corsOptions = {
+    origin: function (origin, callback) {
+        // get specific domain from environment variable (Docker)
+        const envOrigin = process.env.FRONTEND_ORIGIN; 
+
+        // 允许没有 origin 的请求 (比如同源请求、服务器端 curl 请求、或部分移动端请求)
+        if (!origin) return callback(null, true);
+
+        // 检查逻辑：
+        const isAllowed = 
+            // A. 匹配环境变量中配置的域名 (最优先)
+            (envOrigin && origin === envOrigin) ||
+            // B. 匹配硬编码的本地列表
+            defaultAllowed.includes(origin) ||
+            // C. 匹配局域网 IP (以 http://192.168. 开头，方便本地手机访问)
+            origin.startsWith('http://192.168.') ||
+            origin.startsWith('http://10.');
+
+        if (isAllowed) {
+            // 允许访问，CORS 头将自动设置为请求的那个 Origin
+            callback(null, true);
+        } else {
+            // 拒绝访问
+            console.warn(`⚠️ Blocked by CORS: ${origin}`);
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true, // 如果你需要传递 Cookies 或 Authorization 头
+    methods: ['GET', 'POST', 'OPTIONS']
+};
 // ✨ 确保 CORS 配置支持前端端口（如果前端端口改变，CORS 需要调整）
 // 在单容器部署中，如果前端通过 Nginx 代理，CORS 不是问题。
 // 但如果直接访问 3573，则需要确保 CORS 允许该端口：
-app.use(cors({
-    origin: process.env.FRONTEND_ORIGIN || 'http://localhost:3573', // 默认允许 3573端口访问
-}));
+app.use(cors(corsOptions));
 
 // 内存中的图片路径列表
 let imageCache = [];

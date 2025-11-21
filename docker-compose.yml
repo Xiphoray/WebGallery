@@ -17,16 +17,16 @@ services:
       #    该路径已在 Dockerfile 中定义为 /app/data/images
       IMAGE_ROOT: /app/data/images
       # 3. 您的域名，CORS限制
-      FRONTEND_ORIGIN: https://domain.com
+      FRONTEND_ORIGIN: https://domain.cn
     
     # -----------------------------------------------------------
     # 端口映射：外部访问的关键
     # -----------------------------------------------------------
     # 使用 ${HOST_FRONTEND_PORT} 和 ${HOST_BACKEND_PORT} 允许动态配置宿主机端口
     ports:
-      # 前端访问端口: 宿主机:${HOST_FRONTEND_PORT} -> 容器:5173
+      # 前端访问端口: 宿主机:${HOST_FRONTEND_PORT} -> 容器:3574
       - "${HOST_FRONTEND_PORT}:3574"
-      # 后端 API 端口: 宿主机:${HOST_BACKEND_PORT} -> 容器:3000
+      # 后端 API 端口: 宿主机:${HOST_BACKEND_PORT} -> 容器:3573
       - "${HOST_BACKEND_PORT}:3573"
 
     # -----------------------------------------------------------
@@ -36,3 +36,6 @@ services:
     # 使用 ${IMAGE_SOURCE_PATH} 变量来指定宿主机的图片路径
     volumes:
       - "${IMAGE_SOURCE_PATH}:/app/data/images"
+      # ✨ 2. 新增: 配置文件映射
+      # 宿主机 config.js -> 容器内前端 dist 目录下的 config.js
+      - ./config.js:/app/album-frontend/dist/config.js
