@@ -16,7 +16,8 @@ services:
       # 3. 容器内部的图片根目录 (必须与卷映射的目标路径一致)
       #    该路径已在 Dockerfile 中定义为 /app/data/images
       IMAGE_ROOT: /app/data/images
-      FRONTEND_ORIGIN: https://wg.xiphoray.cn
+      # 3. 您的域名，CORS限制
+      FRONTEND_ORIGIN: https://domain.com
     
     # -----------------------------------------------------------
     # 端口映射：外部访问的关键
