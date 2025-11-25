@@ -1,6 +1,6 @@
 # 🖼️ Digital Photo Frame / 网页电子相框
 
-[![GitHub license](https://img.shields.io/github/license/Xiphoray/WebGallery?style=flat-square)](LICENSE)
+[![GitHub license](https://img.shields.io/github/license/Xiphoray/WebGallery)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/Xiphoray/WebGallery?style=flat-square&color=FFC300)](https://github.com/Xiphoray/WebGallery/stargazers)
 ![Build Status](https://github.com/Xiphoray/WebGallery/workflows/Docker/badge.svg)
 [![Language](https://img.shields.io/badge/Language-Vue%20%7C%20Node-4FC08D?style=flat-square)](https://vuejs.org/)
