@@ -1,8 +1,8 @@
 # 🖼️ Digital Photo Frame / 网页电子相框
 
-[![GitHub license](https://img.shields.io/github/license/Xiphoray/Digital-Photo-Frame?style=flat-square)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/Xiphoray/Digital-Photo-Frame?style=flat-square&color=FFC300)](https://github.com/Xiphoray/Digital-Photo-Frame/stargazers)
-[![Docker Pulls](https://img.shields.io/docker/pulls/Xiphoray/photo-album-combined?style=flat-square&color=2496ED)](https://hub.docker.com/r/Xiphoray/photo-album-combined)
+[![GitHub license](https://img.shields.io/github/license/Xiphoray/WebGallery?style=flat-square)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/Xiphoray/WebGallery?style=flat-square&color=FFC300)](https://github.com/Xiphoray/WebGallery/stargazers)
+[![Docker Pulls](https://img.shields.io/docker/pulls/Xiphoray/WebGallery?style=flat-square&color=2496ED)](https://hub.docker.com/r/Xiphoray/WebGallery)
 [![Language](https://img.shields.io/badge/Language-Vue%20%7C%20Node-4FC08D?style=flat-square)](https://vuejs.org/)
 
 **Digital Photo Frame** 是一个基于现代化 Web 技术栈构建的、自托管的、具有高度可定制性的数字相册应用。它专为在树莓派、旧平板或电脑上全屏运行而设计，旨在提供一个美观、流畅且内存友好的方式来循环展示您的家庭照片。
