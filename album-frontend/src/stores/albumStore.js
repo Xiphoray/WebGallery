@@ -77,9 +77,9 @@ export const useAlbumStore = defineStore('album', {
         async testConnection(baseUrl) {
             if (!baseUrl) return false;
             try {
-                // 设置 2 秒超时，防止测试卡太久
+                // 设置 4 秒超时，防止测试卡太久
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 2000);
+                const timeoutId = setTimeout(() => controller.abort(), 4000);
 
                 // 请求 /api/config
                 const res = await fetch(`${baseUrl}/api/config`, { 
