@@ -122,7 +122,16 @@ app.get('/api/image/random', (req, res) => {
     // 错误处理
     stream.on('error', (err) => {
         console.error('Stream error:', err);
+        stream.destroy(); // 出错时强制销毁
         res.status(500).end();
+    });
+
+    // 当客户端断开连接（比如用户快速切换图片，取消了下载）时
+    req.on('close', () => {
+        if (!stream.destroyed) {
+            console.log('Client disconnected, destroying stream...');
+            stream.destroy(); // 销毁读取流，释放文件句柄和内存
+        }
     });
 });
 

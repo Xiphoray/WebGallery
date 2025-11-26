@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "start": "npm-run-all -p frontend:serve backend:start",
     "frontend:serve": "vite preview --port 3574",
-    "backend:start": "node ../album-backend/server.js",
+    "backend:start": "node --max-old-space-size=256 ../album-backend/server.js",
     "backend": "node ../album-backend/server.js",
     "dev:all": "npm-run-all -p backend dev"
   },
