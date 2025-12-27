@@ -24,7 +24,7 @@ COPY album-frontend/vite.config.js ./album-frontend/
 COPY album-frontend/tailwind.config.js ./album-frontend/
 COPY album-frontend/postcss.config.js ./album-frontend/
 COPY album-frontend/src ./album-frontend/src
-COPY album-frontend/public/manifest.json ./album-frontend/public
+COPY album-frontend/public ./album-frontend/public
 
 # 安装全局依赖 (如 npm-run-all)
 RUN npm install -g npm-run-all
