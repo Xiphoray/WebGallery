@@ -5,6 +5,7 @@ services:
   webgallery:    
     container_name: webgallery
     image: ghcr.io/xiphoray/webgallery
+    restart: always
     # -----------------------------------------------------------
     # 核心配置项 (通过环境变量或 .env 文件传入)
     # -----------------------------------------------------------
