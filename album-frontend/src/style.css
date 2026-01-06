@@ -8,3 +8,13 @@ body {
   margin: 0;
   overflow: hidden; /* 防止出现滚动条 */
 }
+/* 针对支持 WCO 的环境 */
+@media (display-mode: window-controls-overlay) {
+  /* 为你的顶部导航栏腾出空间，避免被系统按钮（关闭、最小化）遮挡 */
+  .title-bar {
+    /* 这里的 padding-left/right 会自动计算系统按钮的宽度 */
+    padding-left: env(titlebar-area-x, 0);
+    padding-right: env(titlebar-area-width, 0); 
+    width: 100%;
+    /* 此时你的网页背景色就是“标题栏”颜色，实现了视觉上的透明融合 */
+  }
