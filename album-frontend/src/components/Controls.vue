@@ -82,7 +82,7 @@ const formattedDate = computed(() => {
         </div>
 
         <div 
-            class="fixed bottom-6 right-6 p-4 rounded-xl shadow-xl font-primary font-bold z-20 pointer-events-none"
+            class="fixed bottom-6 right-6 p-4 rounded-xl shadow-xl font-primary font-bold z-50 pointer-events-none"
             :class="{
                 // 亚克力效果
                 'bg-black/40 backdrop-blur-sm': true,
