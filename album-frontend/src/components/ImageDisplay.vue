@@ -41,7 +41,7 @@ const hasImage = computed(() => !!currentImageUrl.value);
 </script>
 
 <template>
-    <div class="absolute inset-0 w-full h-full">
+    <div class="absolute inset-0 w-full h-full overflow-hidden">
 
         <Transition :name="transitionName">
             <div 
@@ -60,7 +60,10 @@ const hasImage = computed(() => !!currentImageUrl.value);
                 :src="currentImageUrl"
                 alt="Display Image"
                 class="w-full h-full transition-opacity duration-500"
-                :class="[imageFitClass]"
+                :class="[
+                    imageFitClass,
+                    'absolute inset-0' 
+                ]"
             />
         </Transition>
     </div>
@@ -91,11 +94,12 @@ const hasImage = computed(() => !!currentImageUrl.value);
 /* ---------------------------------------------------- */
 .slide-next-enter-active,
 .slide-next-leave-active {
-    position: absolute; 
+    /* position: absolute; */
     transition: transform 0.8s ease-in-out;
-    width: 100%;
-    height: 100%;
-    opacity: 1;
+    /* width: 100%;*/
+    /* height: 100%;*/
+    /* opacity: 1;*/
+    z-index: 10;
 }
 
 /* 新图进入 (从右侧滑入) */
@@ -113,11 +117,12 @@ const hasImage = computed(() => !!currentImageUrl.value);
 /* ---------------------------------------------------- */
 .slide-prev-enter-active,
 .slide-prev-leave-active {
-    position: absolute; 
+    /* position: absolute; */
     transition: transform 0.8s ease-in-out;
-    width: 100%;
-    height: 100%;
-    opacity: 1;
+    /* width: 100%;*/
+    /* height: 100%;*/
+    /* opacity: 1;*/
+    z-index: 10;
 }
 
 /* 新图进入 (从左侧滑入) */
