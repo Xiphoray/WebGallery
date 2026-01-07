@@ -68,7 +68,7 @@ watch(() => store.config.colorMode, (newMode) => {
             // 切换黑夜/白天背景色
             'bg-white dark:bg-gray-900': true,
             // 确保内容铺满全屏
-            'h-screen w-screen overflow-hidden': true,
+            'fixed inset-0 overflow-hidden': true,
             // 优化过渡效果
             'transition-colors duration-500': true 
         }"
