@@ -4,9 +4,12 @@ import { useAlbumStore } from './stores/albumStore';
 import SettingsModal from './components/SettingsModal.vue';
 import ImageDisplay from './components/ImageDisplay.vue';
 import Controls from './components/Controls.vue';
-
+import { useWakeLock } from './components/useWakeLock';
+    
 const store = useAlbumStore();
-
+    
+const { requestWakeLock } = useWakeLock();
+    
 /**
  * 根据 store.config.colorMode 动态切换 Tailwind 的 dark 模式
  * Day Mode (白天): 移除 'dark' class
@@ -46,6 +49,7 @@ const updateColorMode = (mode) => {
 // 1. 组件挂载时，初始化 Store
 onMounted(() => {
     store.initialize();
+    requestWakeLock();
 });
 
 // 2. 监听配置中的颜色模式，实时更新 UI
